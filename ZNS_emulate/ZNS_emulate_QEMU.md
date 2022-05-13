@@ -19,5 +19,18 @@ sudo make install
    #!/bin/bash
    SSH_PORT=2222
    sudo qemu-system-x86_64     -boot d   -hda /home/kathy/sys.img     -m 20G     -smp 12     -cpu host     --enable-kvm    --net user,hostfwd=tcp::${SSH_PORT}-:22     -net nic     -vnc :2
-  ```
+   ```
+- Restart QEMU
+   ```
+   #!/bin/bash
+   SSH_PORT=2222
+   sudo qemu-system-x86_64     -boot d   -hda /home/kathy/sys.img     -cdrom /home/kathy/ubuntu-20.04.3-desktop-  amd64.iso     -m 20G     -smp 12     -cpu host     --enable-kvm     --net user,hostfwd=tcp::${SSH_PORT}-:22     -net nic     -vnc :2
+   ```
+- Ensure kernel version is newer than 5.10 +
+
+## ZNS SSD EMULATE
+
+
+
+
 
