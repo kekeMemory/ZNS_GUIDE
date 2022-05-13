@@ -4,27 +4,27 @@
   ```
   root@kxwang:/home/kxwang# mkfs.f2fs -m /dev/nullb0
 
-	F2FS-tools: mkfs.f2fs Ver: 1.11.0 (2018-07-10)
+		F2FS-tools: mkfs.f2fs Ver: 1.11.0 (2018-07-10)
 
-Info: Disable heap-based policy
-Info: Debug level = 0
-Info: Label = 
-Info: Trim is enabled
-Info: Host-managed zoned block device:
-      128 zones, 4 randomly writeable zones
-      16384 blocks per zone
-Info: Segments per section = 32
-Info: Sections per zone = 1
-Info: sector size = 4096
-Info: total sectors = 2097152 (8192 MB)
-Info: zone aligned segment0 blkaddr: 16384
-Info: format version with
-  "Linux version 5.13.0-41-generic (buildd@lcy02-amd64-017) (gcc (Ubuntu 9.4.0-1ubuntu1~20.04.1) 9.4.0, GNU ld (GNU Binutils for Ubuntu) 2.34) #46~20.04.1-Ubuntu SMP Wed Apr 20 13:16:21 UTC 2022"
-Info: [/dev/nullb0] Discarding device
-Info: Discarded 8192 MB
-Info: Overprovision ratio = 10.000%
-Info: Overprovision segments = 1209 (GC reserved = 896)
-Info: format successful
+	Info: Disable heap-based policy
+	Info: Debug level = 0
+	Info: Label = 
+	Info: Trim is enabled
+	Info: Host-managed zoned block device:
+      	128 zones, 4 randomly writeable zones
+      	16384 blocks per zone
+	Info: Segments per section = 32
+	Info: Sections per zone = 1
+	Info: sector size = 4096
+	Info: total sectors = 2097152 (8192 MB)
+	Info: zone aligned segment0 blkaddr: 16384
+	Info: format version with
+  	"Linux version 5.13.0-41-generic (buildd@lcy02-amd64-017) (gcc (Ubuntu 9.4.0-1ubuntu1~20.04.1) 9.4.0, GNU ld (GNU Binutils for Ubuntu) 2.34) 	#46~20.04.1-Ubuntu SMP Wed Apr 20 13:16:21 UTC 2022"
+	Info: [/dev/nullb0] Discarding device
+	Info: Discarded 8192 MB
+	Info: Overprovision ratio = 10.000%
+	Info: Overprovision segments = 1209 (GC reserved = 896)
+	Info: format successful
 
   ```
 - Mount: `sudp mount -t f2fs /dev/nullb0 /mnt/f2fs/`
