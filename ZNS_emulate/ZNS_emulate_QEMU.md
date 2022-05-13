@@ -9,3 +9,9 @@ cd qemu-6.2.0
 make -j$(nproc)
 sudo make install
 ```
+
+## Ubuntu Image Downlaod
+
+```
+wget https://releases.ubuntu.com/focal/ubuntu-20.04.3-desktop-amd64.iso
+```
