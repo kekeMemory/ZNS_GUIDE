@@ -1,0 +1,11 @@
+Running simple W/R commad with nvme-cli
+```
+root@kxwang:/home/kxwang# echo "Hello ZNS" | nvme write /dev/nvme0n1 -z 4096
+write: Success
+
+root@kxwang:/home/kxwang# echo "Hello ZNS" | nvme read /dev/nvme0n1 -z 4096
+Hello ZNS
+read: Success
+
+
+```
