@@ -1,6 +1,6 @@
 ## Install f2fs for Zonde Device
 - Install f2fs-tools : `apt install f2fs-tools -y`
-- `echo mq-deadline > /sys/block/nvme0n1/queue/scheduler`
+- `echo mq-deadline > /sys/block/nullb0/queue/scheduler`
 - Format disk: `mkfs.f2fs -m /dev/nullb0`
   ```
   root@kxwang:/home/kxwang# mkfs.f2fs -m /dev/nullb0
