@@ -1,4 +1,4 @@
-- Shell scripts > ./sysfs_zoned.sh
+- **Scripts** > ./sysfs_zoned.sh
 ```
 #!/bin/sh
 
@@ -11,7 +11,7 @@ cat /sys/block/$dev_name/queue/zone_append_max_bytes
 cat /sys/block/$dev_name/queue/max_open_zones
 cat /sys/block/$dev_name/queue/max_active_zones
 ```
-- Run scripts
+- **Run scripts**
 ```
 root@kxwang:/home/kxwang# ./sysfs_zoned.sh 
 host-managed
