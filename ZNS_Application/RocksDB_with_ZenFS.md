@@ -1,4 +1,4 @@
-- Building and Installing ZenFS
+- **Building and Installing ZenFS**
 ```bash
 $ git clone https://github.com/facebook/rocksdb.git
 $ cd rocksdb
@@ -8,24 +8,25 @@ $ git clone https://github.com/westerndigitalcorporation/zenfs plugin/zenfs
 ```bash
 $ DEBUG_LEVEL=0 ROCKSDB_PLUGINS=zenfs make -j4 db_bench install
 ```
-- Build the zenfs utility
+- **Build the zenfs utility**
 ```bash
 $ pushd
 $ cd plugin/zenfs/util
 $ make
 $ popd
 ```
-- Configure the IO Scheduler for the zoned block device
+- **Configure the IO Scheduler for the zoned block device**
 ```bash
 echo deadline > /sys/class/block/<zoned block device>/queue/scheduler
 ```
-- Creating a ZenFS file system
+- **Creating a ZenFS file system**
     Before ZenFS can be used in RocksDB, the file system metadata and superblock must be set up. This is done with the zenfs utility, using the mkfs command:
 ```bash
 ./plugin/zenfs/util/zenfs mkfs --zbd=<zoned block device> --aux_path=<path to store LOG and LOCK files>
 ```
-- Shell for db_bench test
+- **Shell for db_bench test**
 ```bash
+#ruz_zenfs.sh
 
 #!/bin/bash
 
@@ -48,7 +49,7 @@ rm -rf /tmp/zenfs_$DEV
     --benchmarks=fillrandom,overwrite
     --use_direct_io_for_flush_and_compaction \
 ```
-- List files within a ZenFS file system
+- **List files within a ZenFS file system**
 ```
 root@kxwang:/home/kxwang/rocksdb# ./zenfs list --zbd=/nvme0n1
         4096	May 20 2022 17:19:36            rocksdbtest                     
