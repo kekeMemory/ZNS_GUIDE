@@ -38,7 +38,7 @@ DEV=nvme0n1
 echo deadline > /sys/class/block/$DEV/queue/scheduler
 
 rm -rf /tmp/zenfs_$DEV
-./zenfs mkfs --force --zbd=$DEV --aux_path=/tmp/zenfs_$DEV
+./zenfs mkfs --force --zbd=$DEV --aux_path=<path to store LOG and LOCK files>
 
 
 ./db_bench \
@@ -47,4 +47,29 @@ rm -rf /tmp/zenfs_$DEV
     --value_size=800 \
     --benchmarks=fillrandom,overwrite
     --use_direct_io_for_flush_and_compaction \
+```
+- List files within a ZenFS file system
+```
+root@kxwang:/home/kxwang/rocksdb# ./zenfs list --zbd=/nvme0n1
+        4096	May 20 2022 17:19:36            rocksdbtest                     
+root@kxwang:/home/kxwang/rocksdb# ./zenfs list --zbd=/nvme0n1 --path=rocksdbtest
+        4096	May 20 2022 17:19:36            dbbench                         
+root@kxwang:/home/kxwang/rocksdb# ./zenfs list --zbd=/nvme0n1 --path=rocksdbtest/dbbench
+           0	May 20 2022 17:19:36            LOCK                            
+       51972	May 20 2022 17:19:37            LOG                             
+    34749985	May 20 2022 17:19:36            000009.sst                      
+    34738954	May 20 2022 17:19:36            000011.sst                      
+    67460938	May 20 2022 17:19:37            000017.sst                      
+    34737902	May 20 2022 17:19:37            000018.sst                      
+    55413721	May 20 2022 17:19:37            000020.sst                      
+    34756437	May 20 2022 17:19:37            000021.sst                      
+    65011216	May 20 2022 17:19:37            000022.log                      
+    34790409	May 20 2022 17:19:37            000023.sst                      
+    65011216	May 20 2022 17:19:37            000024.log                      
+    34759854	May 20 2022 17:19:37            000025.sst                      
+           0	May 20 2022 17:19:37            000026.log                      
+          16	May 20 2022 17:19:36            CURRENT                         
+          36	May 20 2022 17:19:36            IDENTITY                        
+        1115	May 20 2022 17:19:37            MANIFEST-000004                 
+        6631	May 20 2022 17:19:36            OPTIONS-000007                  
 ```
