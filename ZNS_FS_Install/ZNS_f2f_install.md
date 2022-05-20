@@ -55,7 +55,7 @@ root@kxwang:/home/kxwang# blkzone report /dev/nullb0
   ............................................................................................................
   start: 0x000fe0000, len 0x020000, wptr 0x000000 reset:0 non-seq:0, zcond: 1(em) [type: 2(SEQ_WRITE_REQUIRED)]
 ```
-**After wiire**
+**After wrire**
 ```
 root@kxwang:/home/kxwang# fallocate -l 150M /mnt/f2fs/text
 root@kxwang:/home/kxwang# blkzone report /dev/nullb0
