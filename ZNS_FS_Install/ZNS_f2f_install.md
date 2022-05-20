@@ -1,7 +1,7 @@
 ## Install f2fs for Zonde Device
-- Install f2fs-tools : `apt install f2fs-tools -y`
-- `echo mq-deadline > /sys/block/nullb0/queue/scheduler`
-- Format disk: `mkfs.f2fs -m /dev/nullb0`
+- **Install f2fs-tools** : `apt install f2fs-tools -y`
+- **Configure IO Scheduler for zoned Block Device**:`echo mq-deadline > /sys/block/nullb0/queue/scheduler`
+- **Format disk**: `mkfs.f2fs -m /dev/nullb0`
   ```
   root@kxwang:/home/kxwang# mkfs.f2fs -m /dev/nullb0
 
@@ -28,11 +28,11 @@
 	Info: format successful
 
   ```
-- Mount: `sudp mount -t f2fs /dev/nullb0 /mnt/f2fs/`
+- **Mount**: `sudp mount -t f2fs /dev/nullb0 /mnt/f2fs/`
 
 ## f2fs write test 
 
-Before write
+**Before write**
 ```
 root@kxwang:/home/kxwang# blkzone report /dev/nullb0
   start: 0x000000000, len 0x020000, wptr 0x000000 reset:0 non-seq:0, zcond: 0(nw) [type: 1(CONVENTIONAL)]
@@ -55,8 +55,8 @@ root@kxwang:/home/kxwang# blkzone report /dev/nullb0
   ............................................................................................................
   start: 0x000fe0000, len 0x020000, wptr 0x000000 reset:0 non-seq:0, zcond: 1(em) [type: 2(SEQ_WRITE_REQUIRED)]
 ```
+**After wiire**
 ```
-After wiire
 root@kxwang:/home/kxwang# fallocate -l 150M /mnt/f2fs/text
 root@kxwang:/home/kxwang# blkzone report /dev/nullb0
   start: 0x000000000, len 0x020000, wptr 0x000000 reset:0 non-seq:0, zcond: 0(nw) [type: 1(CONVENTIONAL)]
