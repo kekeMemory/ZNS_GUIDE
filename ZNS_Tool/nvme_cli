@@ -7,3 +7,14 @@ root@kxwang:/home/kxwang# echo "Hello ZNS" | nvme read /dev/nvme0n1 -z 4096
 Hello ZNS
 read: Success
 ```
+**Zoned namespace support was added to the Linux kernel in version 5.9. The initial driver release requires the namespace to implement the "Zone Append" command in order to work with the kernel's block stack.**
+# Update kernel 5.9
+```bash
+cd /tmp
+wget -c https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.9/amd64/linux-headers-5.9.0-050900_5.9.0-050900.202010112230_all.deb
+wget -c https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.9/amd64/linux-headers-5.9.0-050900-generic_5.9.0-050900.202010112230_amd64.deb
+wget -c https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.9/amd64/linux-image-unsigned-5.9.0-050900-generic_5.9.0-050900.202010112230_amd64.deb
+wget -c https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.9/amd64/linux-modules-5.9.0-050900-generic_5.9.0-050900.202010112230_amd64.deb
+sudo dpkg -i *.deb
+
+```
