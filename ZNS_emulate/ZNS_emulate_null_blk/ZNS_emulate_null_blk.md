@@ -1,5 +1,5 @@
 ```
-# ./nullblk-zoned.sh 4096 64 4 8
+# ./nullblk_zone.sh 4096 64 4 8
 Created /dev/nullb0
 # blkzone report /dev/nullb0 
   start: 0x000000000, len 0x020000, cap 0x020000, wptr 0x000000 reset:0 non-seq:0, zcond: 0(nw) [type: 1(CONVENTIONAL)]
