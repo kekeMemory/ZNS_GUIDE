@@ -164,3 +164,99 @@ Disk stats (read/write):
   nullb0: ios=0/0, merge=0/0, ticks=0/0, in_queue=0, util=0.00%
 ```
 **Note that fio output in this case indicates the number of zones that were reset prior to writing.**
+
+## Random Write Workload
+
+```bash
+root@kxwang:/home/kxwang# fio --name=zns-fio-seq --filename=/dev/nullb0 --direct=1 --zonemode=zbd --offset=00000335544320 --numjobs=4 --ioengine=libaio --iodepth=4 --rw=randwrite --bs=256k --allow_mounted_write=1 --group_reporting --runtime=30
+zns-fio-seq: (g=0): rw=randwrite, bs=(R) 256KiB-256KiB, (W) 256KiB-256KiB, (T) 256KiB-256KiB, ioengine=libaio, iodepth=4
+...
+fio-3.16
+Starting 4 processes
+
+zns-fio-seq: (groupid=0, jobs=4): err= 0: pid=15473: Thu May 26 23:29:49 2022
+  write: IOPS=10.7k, BW=2667MiB/s (2796MB/s)(8192KiB/3msec); 0 zone resets
+    slat (usec): min=8, max=695, avg=39.41, stdev=120.77
+    clat (usec): min=122, max=1034, avg=564.34, stdev=283.44
+     lat (usec): min=131, max=1135, avg=604.16, stdev=298.96
+    clat percentiles (usec):
+     |  1.00th=[  123],  5.00th=[  161], 10.00th=[  176], 20.00th=[  314],
+     | 30.00th=[  433], 40.00th=[  461], 50.00th=[  506], 60.00th=[  562],
+     | 70.00th=[  865], 80.00th=[  906], 90.00th=[  938], 95.00th=[  988],
+     | 99.00th=[ 1037], 99.50th=[ 1037], 99.90th=[ 1037], 99.95th=[ 1037],
+     | 99.99th=[ 1037]
+  lat (usec)   : 250=15.62%, 500=31.25%, 750=21.88%, 1000=28.12%
+  lat (msec)   : 2=3.12%
+  cpu          : usr=66.67%, sys=0.00%, ctx=22, majf=0, minf=47
+  IO depths    : 1=18.8%, 2=31.2%, 4=50.0%, 8=0.0%, 16=0.0%, 32=0.0%, >=64=0.0%
+     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     complete  : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     issued rwts: total=0,32,0,0 short=0,0,0,0 dropped=0,0,0,0
+     latency   : target=0, window=0, percentile=100.00%, depth=4
+
+Run status group 0 (all jobs):
+  WRITE: bw=2667MiB/s (2796MB/s), 2667MiB/s-2667MiB/s (2796MB/s-2796MB/s), io=8192KiB (8389kB), run=3-3msec
+
+Disk stats (read/write):
+  nullb0: ios=0/0, merge=0/0, ticks=0/0, in_queue=0, util=0.00%
+```
+
+**After Write**
+Report Zone Info
+```bash
+root@kxwang:/home/kxwang# zbd report /dev/nullb0 
+Zone 00000: cnv, ofst 00000000000000, len 00000067108864, cap 00000067108864
+Zone 00001: cnv, ofst 00000067108864, len 00000067108864, cap 00000067108864
+Zone 00002: cnv, ofst 00000134217728, len 00000067108864, cap 00000067108864
+Zone 00003: cnv, ofst 00000201326592, len 00000067108864, cap 00000067108864
+Zone 00004: swr, ofst 00000268435456, len 00000067108864, cap 00000067108864, wp 00000268435456, em, non_seq 0, reset 0
+Zone 00005: swr, ofst 00000335544320, len 00000067108864, cap 00000067108864, wp 00000335544320, em, non_seq 0, reset 0
+Zone 00006: swr, ofst 00000402653184, len 00000067108864, cap 00000067108864, wp 00000402653184, em, non_seq 0, reset 0
+Zone 00007: swr, ofst 00000469762048, len 00000067108864, cap 00000067108864, wp 00000470024192, oi, non_seq 0, reset 0
+Zone 00008: swr, ofst 00000536870912, len 00000067108864, cap 00000067108864, wp 00000537657344, oi, non_seq 0, reset 0
+Zone 00009: swr, ofst 00000603979776, len 00000067108864, cap 00000067108864, wp 00000604241920, oi, non_seq 0, reset 0
+Zone 00010: swr, ofst 00000671088640, len 00000067108864, cap 00000067108864, wp 00000671350784, oi, non_seq 0, reset 0
+Zone 00011: swr, ofst 00000738197504, len 00000067108864, cap 00000067108864, wp 00000738197504, em, non_seq 0, reset 0
+Zone 00012: swr, ofst 00000805306368, len 00000067108864, cap 00000067108864, wp 00000805306368, em, non_seq 0, reset 0
+Zone 00013: swr, ofst 00000872415232, len 00000067108864, cap 00000067108864, wp 00000872415232, em, non_seq 0, reset 0
+Zone 00014: swr, ofst 00000939524096, len 00000067108864, cap 00000067108864, wp 00000939786240, oi, non_seq 0, reset 0
+Zone 00015: swr, ofst 00001006632960, len 00000067108864, cap 00000067108864, wp 00001006632960, em, non_seq 0, reset 0
+Zone 00016: swr, ofst 00001073741824, len 00000067108864, cap 00000067108864, wp 00001073741824, em, non_seq 0, reset 0
+Zone 00017: swr, ofst 00001140850688, len 00000067108864, cap 00000067108864, wp 00001140850688, em, non_seq 0, reset 0
+Zone 00018: swr, ofst 00001207959552, len 00000067108864, cap 00000067108864, wp 00001208221696, oi, non_seq 0, reset 0
+Zone 00019: swr, ofst 00001275068416, len 00000067108864, cap 00000067108864, wp 00001275330560, oi, non_seq 0, reset 0
+Zone 00020: swr, ofst 00001342177280, len 00000067108864, cap 00000067108864, wp 00001342701568, oi, non_seq 0, reset 0
+Zone 00021: swr, ofst 00001409286144, len 00000067108864, cap 00000067108864, wp 00001409286144, em, non_seq 0, reset 0
+Zone 00022: swr, ofst 00001476395008, len 00000067108864, cap 00000067108864, wp 00001476657152, oi, non_seq 0, reset 0
+Zone 00023: swr, ofst 00001543503872, len 00000067108864, cap 00000067108864, wp 00001543503872, em, non_seq 0, reset 0
+Zone 00024: swr, ofst 00001610612736, len 00000067108864, cap 00000067108864, wp 00001611137024, oi, non_seq 0, reset 0
+Zone 00025: swr, ofst 00001677721600, len 00000067108864, cap 00000067108864, wp 00001678245888, oi, non_seq 0, reset 0
+Zone 00026: swr, ofst 00001744830464, len 00000067108864, cap 00000067108864, wp 00001745092608, oi, non_seq 0, reset 0
+Zone 00027: swr, ofst 00001811939328, len 00000067108864, cap 00000067108864, wp 00001812201472, oi, non_seq 0, reset 0
+Zone 00028: swr, ofst 00001879048192, len 00000067108864, cap 00000067108864, wp 00001879310336, oi, non_seq 0, reset 0
+Zone 00029: swr, ofst 00001946157056, len 00000067108864, cap 00000067108864, wp 00001946419200, oi, non_seq 0, reset 0
+Zone 00030: swr, ofst 00002013265920, len 00000067108864, cap 00000067108864, wp 00002013528064, oi, non_seq 0, reset 0
+Zone 00031: swr, ofst 00002080374784, len 00000067108864, cap 00000067108864, wp 00002080374784, em, non_seq 0, reset 0
+Zone 00032: swr, ofst 00002147483648, len 00000067108864, cap 00000067108864, wp 00002147483648, em, non_seq 0, reset 0
+Zone 00033: swr, ofst 00002214592512, len 00000067108864, cap 00000067108864, wp 00002214592512, em, non_seq 0, reset 0
+Zone 00034: swr, ofst 00002281701376, len 00000067108864, cap 00000067108864, wp 00002281701376, em, non_seq 0, reset 0
+Zone 00035: swr, ofst 00002348810240, len 00000067108864, cap 00000067108864, wp 00002348810240, em, non_seq 0, reset 0
+Zone 00036: swr, ofst 00002415919104, len 00000067108864, cap 00000067108864, wp 00002415919104, em, non_seq 0, reset 0
+Zone 00037: swr, ofst 00002483027968, len 00000067108864, cap 00000067108864, wp 00002483290112, oi, non_seq 0, reset 0
+Zone 00038: swr, ofst 00002550136832, len 00000067108864, cap 00000067108864, wp 00002550398976, oi, non_seq 0, reset 0
+Zone 00039: swr, ofst 00002617245696, len 00000067108864, cap 00000067108864, wp 00002617245696, em, non_seq 0, reset 0
+Zone 00040: swr, ofst 00002684354560, len 00000067108864, cap 00000067108864, wp 00002684616704, oi, non_seq 0, reset 0
+Zone 00041: swr, ofst 00002751463424, len 00000067108864, cap 00000067108864, wp 00002751463424, em, non_seq 0, reset 0
+Zone 00042: swr, ofst 00002818572288, len 00000067108864, cap 00000067108864, wp 00002819096576, oi, non_seq 0, reset 0
+Zone 00043: swr, ofst 00002885681152, len 00000067108864, cap 00000067108864, wp 00002885681152, em, non_seq 0, reset 0
+Zone 00044: swr, ofst 00002952790016, len 00000067108864, cap 00000067108864, wp 00002953314304, oi, non_seq 0, reset 0
+Zone 00045: swr, ofst 00003019898880, len 00000067108864, cap 00000067108864, wp 00003019898880, em, non_seq 0, reset 0
+Zone 00046: swr, ofst 00003087007744, len 00000067108864, cap 00000067108864, wp 00003087269888, oi, non_seq 0, reset 0
+Zone 00047: swr, ofst 00003154116608, len 00000067108864, cap 00000067108864, wp 00003154116608, em, non_seq 0, reset 0
+Zone 00048: swr, ofst 00003221225472, len 00000067108864, cap 00000067108864, wp 00003221225472, em, non_seq 0, reset 0
+Zone 00049: swr, ofst 00003288334336, len 00000067108864, cap 00000067108864, wp 00003288596480, oi, non_seq 0, reset 0
+Zone 00050: swr, ofst 00003355443200, len 00000067108864, cap 00000067108864, wp 00003355967488, oi, non_seq 0, reset 0
+Zone 00051: swr, ofst 00003422552064, len 00000067108864, cap 00000067108864, wp 00003422552064, em, non_seq 0, reset 0
+Zone 00052: swr, ofst 00003489660928, len 00000067108864, cap 00000067108864, wp 00003489660928, em, non_seq 0, reset 0
+Zone 00053: swr, ofst 00003556769792, len 00000067108864, cap 00000067108864, wp 00003556769792, em, non_seq 0, reset 0
+```
